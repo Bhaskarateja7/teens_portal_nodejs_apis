@@ -54,7 +54,7 @@ update = async (req,res,next)=>{
         if(result.affectedRows==0)
         return res.status(404).send({message: " id not found "});
 
-        return res.status(200).send({message: "user Updated"})
+        return res.status(200).send(result)
 
     }catch(err){
         res.send(err.message)
@@ -71,7 +71,7 @@ remove =  async (req,res,next)=>{
         if(result.affectedRows==0)
         return res.status(404).send({message: " id not found "});
 
-        return res.status(200).send({message: "User Removed"})
+        return res.status(200).send(result)
 
     }catch(err){
         res.send(err.message)

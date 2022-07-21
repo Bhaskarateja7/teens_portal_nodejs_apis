@@ -1,19 +1,15 @@
-const services=require('../services/vendor.service');
-const {vendorSchema,phoneSchema} = require('../validators/vendor.validator')
+const services=require('../services/job.service');
+const {jobSchema} = require('../validators/job.validator')
 
 
 Add = async (req,res,next)=>{
     try{
         let data = req.body;
-        const result = await vendorSchema.validateAsync(data);
+        const result = await jobSchema.validateAsync(data);
+        const post = await services.create(result);
+        res.status(200).send(post);
+        
 
-        if(req.body.password === req.body.confirmpassword){
-            const post = await services.create(result);
-            res.status(200).send(post);
-        }else{
-            res.status(200).json({ message : 'Missmatch Password'});
-
-        } 
     }catch(err){
         res.send(err.message)
         // next();
@@ -29,6 +25,7 @@ get = async (req,res,next)=>{
     }catch(err){
         
         res.send(err.message)
+         // next();
     }
 }
 
@@ -62,22 +59,7 @@ update = async (req,res,next)=>{
 
 }
 
-phone = async (req,res,next)=>{
-    try{
-       let data =req.body;
-        const results = await phoneSchema.validateAsync(data);
-        const result = await services.updatephone(req.params.id,results);
-        if(result.affectedRows==0)
-        return res.status(404).send({message: " id not found "});
 
-        return res.status(200).send(result)
-
-    }catch(err){ 
-        res.send(err.message)
-         // next();
-    }
-
-}
 
 remove =  async (req,res,next)=>{
     try{
@@ -99,6 +81,6 @@ module.exports={
     get,
     getbyid,
     update,
-    remove,
-    phone
+    remove
+   
 }

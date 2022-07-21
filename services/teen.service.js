@@ -56,7 +56,7 @@ get = (id) => {
 
 update = (id) => {
     return new Promise((resolve,reject)=>{
-        pool.query(sql.updateStatus,['teen',id],(error)=>{
+        pool.query(sql.updateStatus,['teen',new Date(),id],(error)=>{
             if(error){
                 return reject(error);
                 

@@ -37,7 +37,7 @@ const schema = Joi.object({
     address :  Joi.string().required(),
     city :  Joi.string().required(),
     state :  Joi.string().required(),
-    zipcode :Joi.string().required(),
+    zipcode :Joi.string().length(5).pattern(/^[0-9]+$/).required()
 
 })
 

@@ -2,21 +2,20 @@ const pool = require('../config/db');
 const sql = require('../sql')
 
 create = (values) => {
-    return new Promise((resolve,reject)=>{
-       
-            pool.query(sql.insertuser,
-            [null,values.email,values.password,'vendor','active',new Date()]
+    return new Promise((resolve,reject)=>{       
+            pool.query(sql.insertjobcategory,
+            [null,values.category,'active',new Date()]
             ,(error,results)=>{
                 if(error){
                     return reject(error);
                 }else {
-                    var uid=results.insertId;
+                    var jcid=results.insertId;
                     resolve(new Promise((resolve,reject)=>{
-                        pool.query(sql.insertvendor,[null,values.name,values.email,values.phonenumber,values.ssn,values.address,values.city,values.state,values.zipcode,'Active',new Date(),uid],(error,result)=>{
+                        pool.query(sql.insertjob,[null,values.orgname,values.jobdescription,values.payment,values.timestart,values.timeend,values.timmings,values.city,values.state,values.zipcode,values.contactdetails,'Active',new Date(),jcid],(error,result)=>{
                             if(error){
                                 return reject(error)
                             }else{
-                                resolve('user created',result.insertId)
+                                resolve('job created',result.insertId)
                             }
                         })
                     }))
@@ -27,9 +26,23 @@ create = (values) => {
     })
 }
 
+createjob = (values,id) => {
+    return new Promise((resolve,reject)=>{       
+                 pool.query(sql.insertjob,[null,values.orgname,values.jobdescription,values.payment,values.timestart,values.timeend,values.timmings,values.city,values.state,values.zipcode,values.contactdetails,'Active',new Date(),jcid],(error,result)=>{
+                     if(error){
+                       return reject(error)
+                           
+                    }else{
+                       return resolve('job created',result.insertId)
+                            }
+                        })
+                    })
+                }
+            
+
 getall = () => {
     return new Promise((resolve,reject)=>{
-        pool.query(sql.get,['vendor'],(error,results)=>{
+        pool.query(sql.get,['job'],(error,results)=>{
             if(error){
                 return reject(error);                
             }else{
@@ -43,7 +56,7 @@ getall = () => {
 
 get = (id) => {
     return new Promise((resolve,reject)=>{
-        pool.query(sql.getbyid,['vendor',id],(error,result)=>{
+        pool.query(sql.getbyid,['job',id],(error,result)=>{
             if(error){
                 return reject(error);
             }
@@ -56,7 +69,7 @@ get = (id) => {
 
 update = (id) => {
     return new Promise((resolve,reject)=>{
-        pool.query(sql.updateStatus,['vendor',new Date(),id],(error)=>{
+        pool.query(sql.updateStatus,['job',new Date(),id],(error)=>{
             if(error){
                 return reject(error);
                 
@@ -68,27 +81,15 @@ update = (id) => {
     })
 }
 
-updatephone = (id,data) => {
-    return new Promise((resolve,reject)=>{
-        pool.query(sql.update,['vendor','phonenumber',data.phonenumber,new Date(),id],(error)=>{
-            if(error){
-                return reject(error);
-                
-            }else{
-                return resolve('phonenumber changed') 
-            }
-        })
-        
-    })
-} 
+
 
 remove = (id) => {
     return new Promise((resolve,reject)=>{
-        pool.query(sql.remove,['vendor',id],(error)=>{
+        pool.query(sql.remove,['job',id],(error)=>{
             if(error){
                 return reject(error);
             }else{
-                return resolve("user Deleted")
+                return resolve("job Deleted")
             }
         })
         
@@ -98,9 +99,10 @@ remove = (id) => {
 
 module.exports={
     create,
+    createjob,
     get,
     getall,
     update,
-    remove,
-    updatephone
+    remove
+    
 }
