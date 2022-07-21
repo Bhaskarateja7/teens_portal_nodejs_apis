@@ -9,7 +9,7 @@ router.get('/', Controller.get);
 
 /* GET users listing. */
 router.get('/:id',cors(), Controller.getbyid);
-
+ 
 /* POST users listing. */
 router.post('/',cors(), Controller.Add);
 

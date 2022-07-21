@@ -41,7 +41,7 @@ const schemas = Joi.object({
     phonenumber : Joi.string().length(10).pattern(/^[0-9]+$/).replace(/\*/g, '%').required()  
 
 
-})
+}) 
 
 module.exports = {
     vendorSchema: schema,
