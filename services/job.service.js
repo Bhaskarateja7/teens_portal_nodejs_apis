@@ -16,6 +16,8 @@ create = (values) => {
                                 return reject(error)
                             }else{
                                 resolve('job created',result.insertId)
+
+                                return result.insertId                            
                             }
                         })
                     }))
@@ -26,7 +28,7 @@ create = (values) => {
     })
 }
 
-createjob = (values,id) => {
+createjob = (values,jcid) => {
     return new Promise((resolve,reject)=>{       
                  pool.query(sql.insertjob,[null,values.orgname,values.jobdescription,values.payment,values.timestart,values.timeend,values.timmings,values.city,values.state,values.zipcode,values.contactdetails,'Active',new Date(),jcid],(error,result)=>{
                      if(error){
@@ -38,6 +40,10 @@ createjob = (values,id) => {
                         })
                     })
                 }
+
+
+
+
             
 
 getall = () => {
@@ -57,6 +63,19 @@ getall = () => {
 get = (id) => {
     return new Promise((resolve,reject)=>{
         pool.query(sql.getbyid,['job',id],(error,result)=>{
+            if(error){
+                return reject(error);
+            }
+            else{
+                return resolve(result);
+            }
+        })        
+    })
+}
+
+getbyvendor = (id) => {
+    return new Promise((resolve,reject)=>{
+        pool.query(sql.getbyvendor,['job',id],(error,result)=>{
             if(error){
                 return reject(error);
             }
@@ -103,6 +122,7 @@ module.exports={
     get,
     getall,
     update,
-    remove
+    remove,
+    getbyvendor
     
 }

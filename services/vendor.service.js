@@ -68,6 +68,8 @@ update = (id) => {
     })
 }
 
+
+
 updatephone = (id,data) => {
     return new Promise((resolve,reject)=>{
         pool.query(sql.update,['vendor','phonenumber',data.phonenumber,new Date(),id],(error)=>{

@@ -3,10 +3,10 @@ require('dotenv').config();
 
 const pool = mysql.createPool({
 connectionLimit : 100,
-host : process.env.HOST,
-user : process.env.USER,
-password: process.env.PASSWORD,
-database : process.env.DATABASE
+host : 'devteensdb.cteirschjtfb.us-east-1.rds.amazonaws.com',
+user : 'admin',
+password: 'C{Cx2Y&dJf*D,>!z',
+database : 'dev_teens_db'
 
 });
 

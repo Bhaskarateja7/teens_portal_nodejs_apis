@@ -44,6 +44,21 @@ getbyid = async (req,res,next)=>{
     }
 }
 
+getbyvendor = async (req,res,next)=>{
+    try{
+        
+        const result= await services.getbyvendor(req.params.id);
+        if(result.length == 0)
+        return res.status(404).send({ message : 'id not found'})   
+             
+        return res.status(200).send(result);
+    }catch(err){
+        res.send(err.message)
+         // next();
+
+    }
+}
+
 update = async (req,res,next)=>{
     try{
         const result = await services.update(req.params.id);
